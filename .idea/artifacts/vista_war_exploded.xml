@@ -1,0 +1,19 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="vista:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/vista_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="vista" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.glassfish:jakarta.faces:4.0.5" />
+          <element id="library" level="project" name="Maven: jakarta.annotation:jakarta.annotation-api:2.1.0" />
+          <element id="library" level="project" name="Maven: org.primefaces:primefaces:jakarta:14.0.0" />
+          <element id="library" level="project" name="Maven: org.jboss.weld.servlet:weld-servlet-shaded:5.1.2.Final" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="vista/web/Web" />
+    </root>
+  </artifact>
+</component>
