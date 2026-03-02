@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>SAUAP - Gestión de Unidades</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .header-bar {
+            background-color: #006737 !important;
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .button-container {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: flex-end;
+            background-color: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .btn-principal {
+            background-color: #006737 !important;
+            background-image: none !important;
+            border: none !important;
+            color: white !important;
+            border-radius: 4px !important;
+            padding: 5px 15px !important;
+        }
+
+        .btn-principal:hover {
+            background-color: #004d29 !important;
+        }
+
+        .btn-accion {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        .btn-edit-icon { color: #006737 !important; } /* Verde para el lápiz */
+        .btn-delete-icon { color: #d32f2f !important; } /* Rojo para la basura */
+
+        .btn-accion:hover {
+            background-color: rgba(0,0,0,0.05) !important;
+            border-radius: 50% !important;
+        }
+
+        .custom-toast {
+            top: auto !important;
+            bottom: 30px !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+        }
+
+        .custom-toast .ui-growl-item-container {
+            background: #006737 !important;
+            background-color: #006737 !important;
+            color: white !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+        }
+
+        .custom-toast .ui-growl-title,
+        .custom-toast .ui-growl-message p {
+            color: white !important;
+            text-shadow: none !important;
+        }
+
+        .custom-toast .ui-growl-image {
+            display: none !important;
+        }
+
+        .ui-inputfield.ui-state-focus {
+            border-color: #006737 !important;
+            box-shadow: 0 0 5px rgba(0, 103, 55, 0.3) !important;
+        }
+
+        .ui-spinner .ui-spinner-button {
+            background: #006737 !important;
+            border-color: #006737 !important;
+        }
+
+        .ui-message-error { background: transparent !important; border: none !important; }
+        .ui-message-error-detail { color: #d32f2f !important; font-size: 12px !important; }
+        .ui-message-error-icon { display: none !important; }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="header-bar">SAUAP - Catálogo de Unidades de Aprendizaje</div>
+
+    <p:growl id="msgToast" severity="info" showDetail="true" life="3000" styleClass="custom-toast" />
+
+    <h:form id="form">
+        <div class="button-container">
+            <p:commandButton value="Nueva Unidad +"
+                             actionListener="#{unidadBean.limpiarFormulario}"
+                             update=":dialogs:unidad-content"
+                             oncomplete="PF('dlgUnidad').show()"
+                             styleClass="btn-principal" />
+        </div>
+
+        <div style="padding: 20px;">
+            <p:dataTable id="dt-unidades" var="ua" value="#{unidadBean.listaUnidades}"
+                         paginator="true" rows="10" paginatorPosition="bottom">
+                <p:column headerText="ID" width="50" style="text-align: center"><h:outputText value="#{ua.id}" /></p:column>
+                <p:column headerText="Nombre de la Materia"><h:outputText value="#{ua.nombre}" /></p:column>
+                <p:column headerText="H. Clase" style="text-align: center"><h:outputText value="#{ua.horasClase}" /></p:column>
+                <p:column headerText="H. Taller" style="text-align: center"><h:outputText value="#{ua.horasTaller}" /></p:column>
+                <p:column headerText="H. Lab" style="text-align: center"><h:outputText value="#{ua.horasLab}" /></p:column>
+
+                <p:column headerText="Acciones" width="100" style="text-align: center">
+                    <p:commandButton icon="pi pi-pencil" styleClass="btn-accion btn-edit-icon" process="@this" />
+                    <p:commandButton icon="pi pi-trash" styleClass="btn-accion btn-delete-icon" process="@this" />
+                </p:column>
+            </p:dataTable>
+        </div>
+    </h:form>
+
+    <h:form id="dialogs">
+        <p:dialog header="Registrar Nueva Unidad" widgetVar="dlgUnidad"
+                  modal="true" responsive="true" width="400">
+
+            <p:ajax event="close" listener="#{unidadBean.limpiarFormulario}" update="unidad-content" />
+
+            <p:outputPanel id="unidad-content" class="ui-fluid">
+                <div class="field" style="margin-bottom:1rem">
+                    <p:outputLabel for="nombre" value="Nombre de la materia" />
+                    <p:inputText id="nombre" value="#{unidadBean.nuevaUnidad.nombre}"
+                                 required="true" requiredMessage="Nombre obligatorio"
+                                 validatorMessage="Máximo 50 caracteres">
+                        <f:validateLength maximum="50" />
+                    </p:inputText>
+                    <p:message for="nombre" display="text" />
+                </div>
+
+                <div style="display: flex; gap: 10px">
+                    <div style="flex:1">
+                        <p:outputLabel for="clase" value="H. Clase" />
+                        <p:spinner id="clase" value="#{unidadBean.nuevaUnidad.horasClase}" min="0" max="10" />
+                        <p:message for="clase" display="text" />
+                    </div>
+                    <div style="flex:1">
+                        <p:outputLabel for="taller" value="H. Taller" />
+                        <p:spinner id="taller" value="#{unidadBean.nuevaUnidad.horasTaller}" min="0" max="10" />
+                        <p:message for="taller" display="text" />
+                    </div>
+                    <div style="flex:1">
+                        <p:outputLabel for="lab" value="H. Lab" />
+                        <p:spinner id="lab" value="#{unidadBean.nuevaUnidad.horasLab}" min="0" max="10" />
+                        <p:message for="lab" display="text" />
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 15px">
+                    <p:message for="msgGlobal" display="text" />
+                </div>
+            </p:outputPanel>
+
+            <f:facet name="footer">
+                <p:commandButton value="Guardar" actionListener="#{unidadBean.guardar}"
+                                 update="unidad-content :form:dt-unidades :msgToast"
+                                 oncomplete="if (!args.validationFailed &amp;&amp; args.savedSuccess) { PF('dlgUnidad').hide(); }"
+                                 styleClass="btn-principal" />
+                <h:inputHidden id="msgGlobal" />
+            </f:facet>
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>
