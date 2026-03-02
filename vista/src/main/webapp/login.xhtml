@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Iniciar Sesión - SAUAP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+
+    <style>
+
+        body {
+            background-color: #EBEBEB;
+            font-family: 'Inter', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; margin: 0;
+        }
+        .login-card {
+            background-color: #FFFFFF; width: 850px; height: 500px;
+            border-radius: 12px; box-shadow: 0px 10px 30px rgba(0,0,0,0.1);
+            display: flex; overflow: hidden;
+        }
+
+
+        .brand-section {
+            width: 50%; position: relative; display: flex;
+            justify-content: center; align-items: center;
+            border-right: 2px solid #EBEBEB; overflow: hidden;
+        }
+        .brand-text { color: #AA893C; font-size: 28px; font-weight: 700; z-index: 10; text-align: center; }
+        .shape-green-top { position: absolute; top: -50px; left: -50px; width: 200px; height: 250px; background-color: #006737; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+        .shape-gold-top { position: absolute; top: -30px; right: -30px; width: 150px; height: 180px; background-color: #C3A042; border-radius: 50% 50% 30% 70% / 50% 50% 70% 50%; }
+        .shape-gold-bottom { position: absolute; bottom: -50px; left: -30px; width: 160px; height: 160px; background-color: #C3A042; border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        .shape-green-bottom { position: absolute; bottom: -50px; right: 0; width: 220px; height: 150px; background-color: #006438; border-radius: 50% 50% 0% 0% / 100% 100% 0% 0%; }
+
+
+        .form-section { width: 50%; padding: 50px; display: flex; flex-direction: column; justify-content: center; }
+        .form-title { color: #006737; font-size: 32px; font-weight: 700; text-align: center; margin-bottom: 40px; }
+        .field-container { margin-bottom: 25px; width: 100%; }
+
+
+        .custom-float-container { position: relative; display: block; width: 100%; }
+
+
+        .ui-password { width: 100% !important; display: block; }
+
+        body .ui-float-label input {
+            width: 100%;
+            padding: 12px 12px 12px 40px !important;
+            border: 1px solid #006737 !important;
+            border-radius: 6px !important;
+            font-family: 'Inter', sans-serif !important;
+            box-sizing: border-box !important;
+            box-shadow: none !important;
+        }
+
+
+        body .ui-float-label label {
+            left: 40px !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            color: #006737 !important;
+            background: #FFFFFF;
+            padding: 0 4px;
+            transition: all 0.2s ease;
+            pointer-events: none;
+            margin: 0;
+        }
+
+
+        body .ui-float-label:has(input:focus) label,
+        body .ui-float-label:has(input.ui-state-filled) label {
+            top: -10px !important;
+            left: 10px !important;
+            font-size: 12px !important;
+            transform: none !important;
+        }
+
+
+        .my-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #006737;
+            font-size: 1.1rem;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        body .ui-password-icon { color: #006737 !important; }
+
+
+        body .ui-float-label:has(input.ui-state-error) input { border-color: #FF0000 !important; }
+        body .ui-float-label:has(input.ui-state-error) label { color: #FF0000 !important; }
+        body .ui-float-label:has(input.ui-state-error) i.my-icon,
+        body .ui-float-label:has(input.ui-state-error) .ui-password-icon { color: #FF0000 !important; }
+
+
+        .custom-error-msg.ui-message, .custom-global-msg .ui-messages-error {
+            background: transparent !important; border: none !important; padding: 0 !important; margin-top: 5px !important;
+        }
+
+
+        .custom-error-msg *, .custom-global-msg * {
+            color: #FF0000 !important;
+            font-family: 'Inter', sans-serif !important;
+        }
+
+        .custom-error-msg .ui-message-error-detail, .custom-global-msg .ui-messages-error-summary {
+            font-size: 13px !important; display: block;
+        }
+
+        .ui-message-error-icon, .ui-messages-error-icon { display: none !important; }
+
+
+        .btn-login {
+            background-color: #006737 !important; border-color: #006737 !important;
+            color: #FFFFFF !important; font-family: 'Inter', sans-serif !important;
+            font-weight: 600 !important; width: 100%; height: 45px;
+            border-radius: 6px !important; margin-top: 15px;
+        }
+        .btn-login:hover { background-color: #006438 !important; }
+    </style>
+</h:head>
+
+<h:body>
+
+    <div class="login-card">
+
+        <div class="brand-section">
+            <div class="shape-green-top"></div>
+            <div class="shape-gold-top"></div>
+            <div class="shape-gold-bottom"></div>
+            <div class="shape-green-bottom"></div>
+            <div class="brand-text">Bienvenido a SAUAP</div>
+        </div>
+
+        <div class="form-section">
+            <h:form id="loginForm">
+
+                <div class="form-title">Iniciar sesión</div>
+
+                <div class="field-container">
+                    <span class="ui-float-label custom-float-container">
+                        <p:inputText id="correo" value="#{loginBean.correo}"
+                                     required="true" requiredMessage="Campo obligatorio" />
+                        <p:outputLabel for="correo" value="Correo electrónico" />
+                        <i class="pi pi-envelope my-icon"></i>
+                    </span>
+                    <p:message for="correo" display="text" styleClass="custom-error-msg" />
+                </div>
+
+                <div class="field-container" style="margin-bottom: 5px;">
+                    <span class="ui-float-label custom-float-container">
+                        <p:password id="contrasena" value="#{loginBean.contrasena}"
+                                    required="true" requiredMessage="Campo obligatorio"
+                                    toggleMask="true" />
+                        <p:outputLabel for="contrasena" value="Contraseña" />
+                        <i class="pi pi-lock my-icon"></i>
+                    </span>
+                    <p:message for="contrasena" display="text" styleClass="custom-error-msg" />
+                </div>
+
+                <p:messages id="mensajes" globalOnly="true" showDetail="false" closable="false" styleClass="custom-global-msg">
+                    <p:autoUpdate/>
+                </p:messages>
+
+                <p:commandButton value="Iniciar sesión" action="#{loginBean.entrar}"
+                                 ajax="false" styleClass="btn-login" />
+
+            </h:form>
+        </div>
+
+    </div>
+
+</h:body>
+</html>
