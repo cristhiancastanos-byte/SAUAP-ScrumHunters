@@ -38,7 +38,7 @@ public class LoginBean implements Serializable {
             this.contrasena = null;
 
 
-            return "crud_unidades.xhtml?faces-redirect=true";
+            return "profesor.xhtml?faces-redirect=true";
         } else {
 
             this.correo = null;

@@ -10,45 +10,76 @@
         body {
             margin: 0; padding: 0;
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #E9E9E9;
+            background-color: #f0f0f0;
         }
-
 
         .navbar {
-            background-color: #006737 !important;
-            color: white;
-            padding: 12px 30px;
+            background-color: #2b5e3d;
             display: flex;
             align-items: center;
-            border-bottom: 4px solid #996633;
+            padding: 0 40px;
+            height: 70px;
+            border-bottom: 4px solid #b39b59;
         }
-        .nav-brand { font-weight: bold; font-size: 20px; margin-right: 40px; }
-        .nav-menu { display: flex; gap: 25px; }
-        .nav-link { color: white; text-decoration: none; font-weight: bold; font-size: 16px; }
-        .nav-link.active { border-bottom: 2px solid white; }
-        .logout { margin-left: auto; display: flex; align-items: center; gap: 8px; cursor: pointer; }
 
+        .navbar-brand {
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 50px;
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 30px;
+            flex-grow: 1;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .navbar-links a.active, .navbar-links a:hover {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        .logout-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
 
         .main-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             padding-top: 40px;
+            padding-bottom: 40px;
         }
+
         .form-title {
             width: 750px;
             text-align: left;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 1.5rem;
             margin-bottom: 15px;
+            color: #000;
         }
-
 
         .form-card {
             background: white;
             padding: 40px;
             border-radius: 4px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             width: 750px;
             box-sizing: border-box;
         }
@@ -60,23 +91,21 @@
             margin-bottom: 25px;
         }
 
-
         .field-group { display: flex; flex-direction: column; gap: 5px; }
-        .field-label { font-weight: bold; font-size: 15px; }
+        .field-label { font-weight: bold; font-size: 14px; color: #111827; }
 
         .custom-input {
-            background-color: #E9E9E9 !important;
-            border: 1px solid #999 !important;
-            border-radius: 10px !important;
+            background-color: #fbfbfc !important;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 4px !important;
             padding: 10px !important;
             width: 100%;
             box-sizing: border-box;
+            color: #000 !important;
         }
 
-
-        .ui-state-error { border: 1px solid red !important; }
-        .error-text { color: red !important; font-size: 11px !important; font-weight: bold; margin-top: 2px; }
-
+        .ui-state-error { border: 1px solid #e53935 !important; }
+        .error-text { color: #e53935 !important; font-size: 12px !important; font-weight: bold; margin-top: 2px; }
 
         .button-bar {
             width: 750px;
@@ -84,65 +113,75 @@
             justify-content: flex-end;
             margin-top: 25px;
         }
+
         .btn-sauap {
-            background-color: #006737 !important;
+            background-color: #2b5e3d !important;
             color: white !important;
             border: none !important;
-            border-radius: 10px !important;
+            border-radius: 4px !important;
             padding: 12px 0 !important;
             width: 220px !important;
             font-weight: bold !important;
             font-size: 16px !important;
             text-align: center !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
         }
 
+        .btn-sauap:hover {
+            background-color: #1f452c !important;
+        }
 
         .success-panel {
             margin-top: 30px;
             background: white;
             width: 750px;
-            height: 150px;
-            border: 2px solid #006737;
-            border-radius: 10px;
+            height: 100px;
+            border: 2px solid #2b5e3d;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
+
         .error-panel {
             margin-top: 30px;
             background: #FFF0F0;
             width: 750px;
-            height: 150px;
+            height: 100px;
             border: 2px solid #d32f2f;
-            border-radius: 10px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
     </style>
 </h:head>
 
 <h:body>
     <div class="navbar">
-        <div class="nav-brand">SAUAP</div>
-        <div class="nav-menu">
-            <a href="#" class="nav-link active">Profesores</a>
-            <a href="http://localhost:8080/vista/crud_unidades.xhtml" class="nav-link">Unidades</a>
-            <a href="#" class="nav-link">Asignaciones</a>
-            <a href="#" class="nav-link">Consultas</a>
+        <h:outputText value="SAUAP" class="navbar-brand" />
+
+        <div class="navbar-links">
+            <h:outputLink value="#" class="active">Profesores</h:outputLink>
+            <h:outputLink value="crud_unidades.xhtml">Unidades</h:outputLink>
+            <h:outputLink value="asignacion.xhtml">Asignaciones</h:outputLink>
+            <h:outputLink value="reporte_carga.xhtml">Consultas</h:outputLink>
         </div>
-        <div class="logout">
-            <div style="text-align: right; font-size: 12px; font-weight: bold;">Cerrar<br/>sesión</div>
+
+        <h:outputLink value="#" class="logout-btn">
             <i class="pi pi-sign-out" style="font-size: 1.5rem"></i>
-        </div>
+            <h:outputText value="Cerrar sesión" escape="false" />
+        </h:outputLink>
     </div>
 
     <div class="main-container">
-        <h:form id="profesorForm">
-            <div class="form-title">Formulario del profesor</div>
+        <div class="form-title">Formulario del profesor</div>
 
+        <h:form id="profesorForm">
             <div class="form-card">
                 <div class="input-grid">
                     <div class="field-group">
@@ -199,8 +238,8 @@
 
         <h:panelGroup id="message-panel">
             <h:panelGroup rendered="#{not empty profesorBean.mensaje and profesorBean.exito}" styleClass="success-panel">
-                <span style="font-size: 18px; font-weight: bold;">#{profesorBean.mensaje}</span>
-                <i class="pi pi-check-circle" style="color: #28a745; font-size: 2.5rem;"></i>
+                <span style="font-size: 18px; font-weight: bold; color: #000;">#{profesorBean.mensaje}</span>
+                <i class="pi pi-check-circle" style="color: #2b5e3d; font-size: 2.5rem;"></i>
             </h:panelGroup>
 
             <h:panelGroup rendered="#{not empty profesorBean.mensaje and not profesorBean.exito}" styleClass="error-panel">

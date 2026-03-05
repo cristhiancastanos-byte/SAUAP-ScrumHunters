@@ -1,4 +1,6 @@
 package com.sauap.persistencia;
+import java.util.List;
+import com.sauap.entidad.Asignacion;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -14,7 +16,6 @@ public class AsignacionDAO {
     public long contarTraslapes(int idProfesor, String dia, Time inicio, Time fin) {
         EntityManager em = emf.createEntityManager();
         try {
-            // Empalme si: inicioNuevo < finExistente AND finNuevo > inicioExistente
             String jpql =
                     "SELECT COUNT(a) " +
                             "FROM Asignacion a " +
@@ -43,6 +44,19 @@ public class AsignacionDAO {
         } catch (Exception e) {
             if (em.getTransaction().isActive()) em.getTransaction().rollback();
             throw e;
+        } finally {
+            em.close();
+        }
+    }
+    public List<Asignacion> obtenerAsignacionesOrdenadas() {
+        EntityManager em = emf.createEntityManager();
+        try {
+            String jpql = "SELECT a FROM Asignacion a " +
+                    "JOIN FETCH a.profesor p " +
+                    "JOIN FETCH a.unidad u " +
+                    "ORDER BY p.apellidoPaterno ASC";
+
+            return em.createQuery(jpql, Asignacion.class).getResultList();
         } finally {
             em.close();
         }

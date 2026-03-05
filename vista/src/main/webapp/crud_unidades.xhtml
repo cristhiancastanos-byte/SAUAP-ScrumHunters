@@ -11,23 +11,78 @@
         body {
             margin: 0; padding: 0;
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f0f0f0;
         }
 
-        .header-bar {
-            background-color: #006737 !important;
+        .navbar {
+            background-color: #2b5e3d;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            border-bottom: 4px solid #b39b59;
+        }
+
+        .navbar-brand {
             color: white;
-            padding: 15px 20px;
-            font-size: 1.2rem;
             font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 50px;
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 30px;
+            flex-grow: 1;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .navbar-links a.active, .navbar-links a:hover {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        .logout-btn {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .page {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 50px;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 40px;
         }
 
         .button-container {
-            padding: 15px 20px;
             display: flex;
             justify-content: flex-end;
-            background-color: white;
-            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 20px;
         }
 
         .btn-principal {
@@ -56,6 +111,23 @@
             border-radius: 50% !important;
         }
 
+        body .ui-datatable thead th {
+            background: white !important;
+            border: none !important;
+            color: black !important;
+            font-weight: bold !important;
+            padding-bottom: 15px !important;
+        }
+        body .ui-datatable .ui-datatable-data > tr > td {
+            border: none !important;
+            padding: 12px 10px !important;
+            color: #000 !important;
+        }
+        body .ui-datatable .ui-datatable-data > tr.ui-widget-content {
+            background: white !important;
+            border-bottom: 1px solid #eee !important;
+        }
+
         .custom-toast {
             top: auto !important;
             bottom: 30px !important;
@@ -65,7 +137,6 @@
 
         .custom-toast .ui-growl-item-container {
             background: #006737 !important;
-            background-color: #006737 !important;
             color: white !important;
             border: none !important;
             box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
@@ -77,9 +148,7 @@
             text-shadow: none !important;
         }
 
-        .custom-toast .ui-growl-image {
-            display: none !important;
-        }
+        .custom-toast .ui-growl-image { display: none !important; }
 
         .ui-inputfield.ui-state-focus {
             border-color: #006737 !important;
@@ -98,35 +167,54 @@
 </h:head>
 
 <h:body>
-    <div class="header-bar">SAUAP - Catálogo de Unidades de Aprendizaje</div>
+    <div class="navbar">
+        <h:outputText value="SAUAP" class="navbar-brand" />
 
-    <p:growl id="msgToast" severity="info" showDetail="true" life="3000" styleClass="custom-toast" />
-
-    <h:form id="form">
-        <div class="button-container">
-            <p:commandButton value="Nueva Unidad +"
-                             actionListener="#{unidadBean.limpiarFormulario}"
-                             update=":dialogs:unidad-content"
-                             oncomplete="PF('dlgUnidad').show()"
-                             styleClass="btn-principal" />
+        <div class="navbar-links">
+            <h:outputLink value="profesor.xhtml">Profesores</h:outputLink>
+            <h:outputLink value="#" class="active">Unidades</h:outputLink>
+            <h:outputLink value="asignacion.xhtml">Asignaciones</h:outputLink>
+            <h:outputLink value="reporte_carga.xhtml">Consultas</h:outputLink>
         </div>
 
-        <div style="padding: 20px;">
-            <p:dataTable id="dt-unidades" var="ua" value="#{unidadBean.listaUnidades}"
-                         paginator="true" rows="10" paginatorPosition="bottom">
-                <p:column headerText="ID" width="50" style="text-align: center"><h:outputText value="#{ua.id}" /></p:column>
-                <p:column headerText="Nombre de la Materia"><h:outputText value="#{ua.nombre}" /></p:column>
-                <p:column headerText="H. Clase" style="text-align: center"><h:outputText value="#{ua.horasClase}" /></p:column>
-                <p:column headerText="H. Taller" style="text-align: center"><h:outputText value="#{ua.horasTaller}" /></p:column>
-                <p:column headerText="H. Lab" style="text-align: center"><h:outputText value="#{ua.horasLab}" /></p:column>
+        <h:outputLink value="#" class="logout-btn">
+            <i class="pi pi-sign-out" style="font-size: 1.5rem"></i>
+            <h:outputText value="Cerrar sesión" escape="false" />
+        </h:outputLink>
+    </div>
 
-                <p:column headerText="Acciones" width="100" style="text-align: center">
-                    <p:commandButton icon="pi pi-pencil" styleClass="btn-accion btn-edit-icon" process="@this" />
-                    <p:commandButton icon="pi pi-trash" styleClass="btn-accion btn-delete-icon" process="@this" />
-                </p:column>
-            </p:dataTable>
+    <div class="page">
+        <div class="page-title">Catálogo de Unidades de Aprendizaje</div>
+
+        <p:growl id="msgToast" severity="info" showDetail="true" life="3000" styleClass="custom-toast" />
+
+        <div class="card">
+            <h:form id="form">
+                <div class="button-container">
+                    <p:commandButton value="Nueva Unidad +"
+                                     actionListener="#{unidadBean.limpiarFormulario}"
+                                     update=":dialogs:unidad-content"
+                                     oncomplete="PF('dlgUnidad').show()"
+                                     styleClass="btn-principal" />
+                </div>
+
+                <p:dataTable id="dt-unidades" var="ua" value="#{unidadBean.listaUnidades}"
+                             paginator="true" rows="10" paginatorPosition="bottom"
+                             emptyMessage="No hay unidades registradas.">
+                    <p:column headerText="ID" width="50" style="text-align: center"><h:outputText value="#{ua.id}" /></p:column>
+                    <p:column headerText="Nombre de la Materia"><h:outputText value="#{ua.nombre}" /></p:column>
+                    <p:column headerText="H. Clase" style="text-align: center"><h:outputText value="#{ua.horasClase}" /></p:column>
+                    <p:column headerText="H. Taller" style="text-align: center"><h:outputText value="#{ua.horasTaller}" /></p:column>
+                    <p:column headerText="H. Lab" style="text-align: center"><h:outputText value="#{ua.horasLab}" /></p:column>
+
+                    <p:column headerText="Acciones" width="100" style="text-align: center">
+                        <p:commandButton icon="pi pi-pencil" styleClass="btn-accion btn-edit-icon" process="@this" />
+                        <p:commandButton icon="pi pi-trash" styleClass="btn-accion btn-delete-icon" process="@this" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
         </div>
-    </h:form>
+    </div>
 
     <h:form id="dialogs">
         <p:dialog header="Registrar Nueva Unidad" widgetVar="dlgUnidad"
