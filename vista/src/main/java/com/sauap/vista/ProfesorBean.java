@@ -14,7 +14,7 @@ public class ProfesorBean implements Serializable {
     private ProfesorService service = new ProfesorService();
 
     private String mensaje;
-    private boolean exito; // Controla el color del panel final
+    private boolean exito;
 
     public ProfesorBean() {
     }
@@ -24,14 +24,14 @@ public class ProfesorBean implements Serializable {
             service.guardarProfesor(profesor);
             this.mensaje = "Profesor Registrado exitosamente";
             this.exito = true;
-            this.profesor = new Profesor(); // Limpiamos el formulario
+            this.profesor = new Profesor();
         } catch (Exception e) {
-            this.mensaje = e.getMessage(); // Captura el texto de error del Service
+            this.mensaje = e.getMessage();
             this.exito = false;
         }
     }
 
-    // Getters y Setters obligatorios
+
     public Profesor getProfesor() { return profesor; }
     public void setProfesor(Profesor profesor) { this.profesor = profesor; }
 

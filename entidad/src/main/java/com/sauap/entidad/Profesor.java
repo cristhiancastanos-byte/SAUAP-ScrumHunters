@@ -24,11 +24,9 @@ public class Profesor implements Serializable {
     @Column(name = "rfc", length = 13, unique = true)
     private String rfc;
 
-    // Constructor vacío obligatorio
     public Profesor() {
     }
 
-    // Getters y Setters corregidos
     public int getId() {
         return id;
     }
