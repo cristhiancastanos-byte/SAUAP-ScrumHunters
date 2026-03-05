@@ -1,4 +1,5 @@
 package com.sauap.servicio;
+import java.util.List;
 
 import com.sauap.entidad.Asignacion;
 import com.sauap.persistencia.AsignacionDAO;
@@ -28,5 +29,8 @@ public class AsignacionService {
         }
 
         asignacionDAO.guardar(nuevaAsignacion);
+    }
+    public List<Asignacion> listarAsignaciones() {
+        return asignacionDAO.obtenerAsignacionesOrdenadas();
     }
 }

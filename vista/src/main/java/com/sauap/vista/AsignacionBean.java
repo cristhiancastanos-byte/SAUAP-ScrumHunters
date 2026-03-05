@@ -33,6 +33,7 @@ public class AsignacionBean implements Serializable {
     private List<Profesor> listaProfesores;
     private List<UnidadAprendizaje> listaUnidades;
     private List<String> listaDias;
+    private List<Asignacion> listaAsignaciones;
 
     private Integer idProfesorSeleccionado;
     private Integer idUnidadSeleccionada;
@@ -47,6 +48,8 @@ public class AsignacionBean implements Serializable {
 
         listaProfesores = profesorService.listarProfesores();
         listaUnidades = unidadService.listarUnidades();
+
+        listaAsignaciones = asignacionService.listarAsignaciones();
     }
 
     public void guardar() {
@@ -120,4 +123,8 @@ public class AsignacionBean implements Serializable {
 
     public Date getHoraFin() { return horaFin; }
     public void setHoraFin(Date horaFin) { this.horaFin = horaFin; }
+
+    public List<Asignacion> getListaAsignaciones() {
+        return listaAsignaciones;
+    }
 }

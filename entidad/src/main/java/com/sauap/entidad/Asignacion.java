@@ -12,12 +12,10 @@ public class Asignacion implements Serializable {
     @Column(name = "id_asignacion")
     private Integer idAsignacion;
 
-    // --- Relación con Profesor ---
     @ManyToOne
     @JoinColumn(name = "id_profesor", nullable = false)
     private Profesor profesor;
 
-    // --- Relación con Unidad de Aprendizaje ---
 
     @ManyToOne
     @JoinColumn(name = "id_unidad", referencedColumnName = "id_unidad", nullable = false)
@@ -46,7 +44,6 @@ public class Asignacion implements Serializable {
         this.horaFin = horaFin;
     }
 
-    // --- GETTERS Y SETTERS ---
     public Integer getIdAsignacion() { return idAsignacion; }
     public void setIdAsignacion(Integer idAsignacion) { this.idAsignacion = idAsignacion; }
 
