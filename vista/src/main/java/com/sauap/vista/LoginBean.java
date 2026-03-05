@@ -17,10 +17,8 @@ public class LoginBean implements Serializable {
     private UsuarioService usuarioService;
 
     public LoginBean() {
-
         this.usuarioService = new UsuarioService();
     }
-
 
     public String getCorreo() { return correo; }
     public void setCorreo(String correo) { this.correo = correo; }
@@ -28,27 +26,28 @@ public class LoginBean implements Serializable {
     public String getContrasena() { return contrasena; }
     public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 
-
     public String entrar() {
         Usuario usuario = usuarioService.validarLogin(correo, contrasena);
 
         if (usuario != null) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuarioLogueado", usuario);
 
             this.correo = null;
             this.contrasena = null;
-
 
             return "profesor.xhtml?faces-redirect=true";
         } else {
-
             this.correo = null;
             this.contrasena = null;
-
-
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario o contraseña incorrectos", null));
 
             return null;
         }
+    }
+
+    public String cerrarSesion() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "login.xhtml?faces-redirect=true";
     }
 }

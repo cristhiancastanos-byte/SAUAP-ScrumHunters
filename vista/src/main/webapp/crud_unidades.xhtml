@@ -49,9 +49,9 @@
             text-underline-offset: 6px;
         }
 
-        .logout-btn {
-            color: white;
-            text-decoration: none;
+        body .logout-btn {
+            color: white !important;
+            text-decoration: none !important;
             font-weight: bold;
             display: flex;
             align-items: center;
@@ -177,10 +177,18 @@
             <h:outputLink value="reporte_carga.xhtml">Consultas</h:outputLink>
         </div>
 
-        <h:outputLink value="#" class="logout-btn">
-            <i class="pi pi-sign-out" style="font-size: 1.5rem"></i>
-            <h:outputText value="Cerrar sesión" escape="false" />
-        </h:outputLink>
+        <h:form style="margin: 0; padding: 0;">
+            <p:commandLink action="#{loginBean.cerrarSesion}" styleClass="logout-btn">
+                <p:confirm header="Cerrar sesión" message="¿Seguro que quieres cerrar sesión?" icon="pi pi-exclamation-triangle"/>
+                <i class="pi pi-sign-out" style="font-size: 1.5rem"></i>
+                <h:outputText value="Cerrar sesión" escape="false" />
+            </p:commandLink>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Cerrar sesión" type="button" styleClass="ui-confirmdialog-yes"
+                                 style="background-color: #006737; border-color: #006737; color: white;"/>
+            </p:confirmDialog>
+        </h:form>
     </div>
 
     <div class="page">
@@ -207,10 +215,7 @@
                     <p:column headerText="H. Taller" style="text-align: center"><h:outputText value="#{ua.horasTaller}" /></p:column>
                     <p:column headerText="H. Lab" style="text-align: center"><h:outputText value="#{ua.horasLab}" /></p:column>
 
-                    <p:column headerText="Acciones" width="100" style="text-align: center">
-                        <p:commandButton icon="pi pi-pencil" styleClass="btn-accion btn-edit-icon" process="@this" />
-                        <p:commandButton icon="pi pi-trash" styleClass="btn-accion btn-delete-icon" process="@this" />
-                    </p:column>
+
                 </p:dataTable>
             </h:form>
         </div>
