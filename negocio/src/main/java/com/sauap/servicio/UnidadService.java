@@ -4,6 +4,7 @@ import com.sauap.entidad.UnidadAprendizaje;
 import com.sauap.persistencia.UnidadDAO;
 import java.util.List;
 
+
 public class UnidadService {
     private UnidadDAO unidadDAO = new UnidadDAO();
 
@@ -16,5 +17,9 @@ public class UnidadService {
 
     public List<UnidadAprendizaje> listarUnidades() {
         return unidadDAO.obtenerTodas();
+    }
+
+    public UnidadAprendizaje buscarPorId(int id) {
+        return unidadDAO.buscarPorId(id);
     }
 }
