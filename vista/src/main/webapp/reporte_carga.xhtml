@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+<h:head>
+    <title>Consultas - SAUAP</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            background-color: #2b5e3d;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            border-bottom: 4px solid #b39b59;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 50px;
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 30px;
+            flex-grow: 1;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .navbar-links a.active {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        body .logout-btn {
+            color: white !important;
+            text-decoration: none !important;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .main-container {
+            padding: 30px 50px;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 4px;
+            padding: 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        body .ui-datatable thead th {
+            background: white !important;
+            border: none !important;
+            color: black !important;
+            font-weight: bold !important;
+            text-align: center !important;
+            padding-bottom: 20px !important;
+        }
+
+        body .ui-datatable .ui-datatable-data > tr > td {
+            border: none !important;
+            text-align: center !important;
+            font-weight: bold !important;
+            padding: 15px 10px !important;
+            color: #000 !important;
+        }
+
+        body .ui-datatable .ui-datatable-data > tr.ui-widget-content {
+            background: white !important;
+            border: none !important;
+        }
+    </style>
+</h:head>
+<h:body>
+
+    <div class="navbar">
+        <h:outputText value="SAUAP" class="navbar-brand" />
+
+        <div class="navbar-links">
+            <h:outputLink value="profesor.xhtml">Profesores</h:outputLink>
+            <h:outputLink value="crud_unidades.xhtml">Unidades</h:outputLink>
+            <h:outputLink value="asignacion.xhtml">Asignaciones</h:outputLink>
+            <h:outputLink value="#" class="active">Consultas</h:outputLink>
+        </div>
+
+        <h:form style="margin: 0; padding: 0;">
+            <p:commandLink action="#{loginBean.cerrarSesion}" styleClass="logout-btn">
+                <p:confirm header="Cerrar sesión" message="¿Seguro que quieres cerrar sesión?" icon="pi pi-exclamation-triangle"/>
+                <i class="pi pi-sign-out" style="font-size: 1.5rem"></i>
+                <h:outputText value="Cerrar sesión" escape="false" />
+            </p:commandLink>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Cerrar sesión" type="button" styleClass="ui-confirmdialog-yes"
+                                 style="background-color: #006737; border-color: #006737; color: white;"/>
+            </p:confirmDialog>
+        </h:form>
+    </div>
+
+    <div class="main-container">
+        <div class="page-title">Consultas</div>
+
+        <div class="card">
+            <p:dataTable value="#{asignacionBean.listaAsignaciones}" var="asig"
+                         emptyMessage="No hay asignaciones registradas.">
+
+                <p:column headerText="Profesor">
+                    <h:outputText value="#{asig.profesor.nombre} #{asig.profesor.apellidoPaterno} #{asig.profesor.apellidoMaterno}" />
+                </p:column>
+
+                <p:column headerText="Unidad de aprendizaje">
+                    <h:outputText value="#{asig.unidad.nombre}" />
+                </p:column>
+
+                <p:column headerText="Dia">
+                    <h:outputText value="#{asig.dia}" />
+                </p:column>
+
+                <p:column headerText="Hora Inicio">
+                    <h:outputText value="#{asig.horaInicio}">
+                        <f:convertDateTime pattern="HH:mm" type="time" timeZone="America/Tijuana"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Hora Fin">
+                    <h:outputText value="#{asig.horaFin}">
+                        <f:convertDateTime pattern="HH:mm" type="time" timeZone="America/Tijuana"/>
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+        </div>
+    </div>
+
+</h:body>
+</html>

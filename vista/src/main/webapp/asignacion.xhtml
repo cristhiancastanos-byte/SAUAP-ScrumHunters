@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Asignación - SAUAP</title>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+        }
+
+        :root{
+            --uabc-green:#1f5e3b;
+            --uabc-green-2:#2d6a44;
+            --uabc-gold:#d6a545;
+            --bg:#f0f0f0;
+            --card:#ffffff;
+            --text:#1f2937;
+            --muted:#6b7280;
+            --border:#e5e7eb;
+            --danger:#e53935;
+            --success:#1f5e3b;
+        }
+
+        .sauap{
+            min-height:100vh;
+            background:var(--bg);
+            color:var(--text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background-color: #2b5e3d;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            border-bottom: 4px solid #b39b59;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 50px;
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 30px;
+            flex-grow: 1;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .navbar-links a.active, .navbar-links a:hover {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        body .logout-btn {
+            color: white !important;
+            text-decoration: none !important;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+
+        .sauap .page{
+            max-width:1100px;
+            margin: 30px auto;
+            padding: 0 50px;
+        }
+        .sauap .page-title{
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #000;
+        }
+
+        .sauap .card{
+            background:var(--card);
+            border: none;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+
+        .sauap .card-head{
+            display:flex;
+            align-items:center;
+            gap:12px;
+            margin-bottom:18px;
+        }
+        .sauap .card-icon{
+            width:42px;height:42px;border-radius:12px;
+            background:rgba(31,94,59,.12);
+            display:flex;align-items:center;justify-content:center;
+            color:var(--uabc-green);
+            font-weight:900;
+        }
+        .sauap .card-head h2{
+            margin:0;
+            font-size:22px;
+            font-weight:800;
+        }
+        .sauap .card-head p{
+            margin:2px 0 0 0;
+            color:var(--muted);
+            font-size:13px;
+        }
+
+        .sauap .grid{
+            display:grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap:26px;
+            margin-top:8px;
+        }
+
+        .sauap .field{
+            display:flex;
+            flex-direction:column;
+            gap:6px;
+            margin-bottom:14px;
+        }
+        .sauap .label{
+            font-weight:700;
+            font-size:13px;
+            color:#111827;
+        }
+
+        .sauap .rightBox{
+            border:1px solid var(--border);
+            border-radius:14px;
+            padding:16px;
+            background:#fbfbfc;
+        }
+        .sauap .rightTitle{
+            font-weight:800;
+            margin-bottom:10px;
+        }
+
+        .sauap .timeRow{
+            display:grid;
+            grid-template-columns: 1fr 1fr;
+            gap:14px;
+            margin-top:10px;
+        }
+
+        .sauap .actions{
+            display:flex;
+            justify-content:center;
+            gap:14px;
+            margin-top:18px;
+        }
+
+        .sauap .ui-selectonemenu,
+        .sauap .ui-inputfield{
+            width:100%;
+        }
+
+        .sauap .dayButtons .ui-selectonebutton .ui-button{
+            border-radius:10px;
+            margin-right:8px;
+            border:1px solid var(--border);
+            background:#fff;
+            color:#111827;
+            font-weight:700;
+        }
+        .sauap .dayButtons .ui-selectonebutton .ui-state-active{
+            background:rgba(31,94,59,.12);
+            border-color:rgba(31,94,59,.35);
+            color:var(--uabc-green);
+        }
+
+        .sauap .btn-primary.ui-button{
+            background:var(--uabc-green);
+            border:1px solid var(--uabc-green);
+            color:#fff;
+            border-radius:10px;
+        }
+        .sauap .btn-primary.ui-button:hover{
+            background:var(--uabc-green-2);
+            border-color:var(--uabc-green-2);
+        }
+
+        .sauap .btn-secondary.ui-button{
+            background:#e9ecef;
+            border:1px solid #d7dbe0;
+            color:#111827;
+            border-radius:10px;
+        }
+
+        .sauap .ui-state-error,
+        .sauap .ui-inputfield.ui-state-error,
+        .sauap .ui-selectonemenu.ui-state-error,
+        .sauap .ui-selectonebutton.ui-state-error{
+            border:2px solid var(--danger);
+            box-shadow:none;
+            background:#fff;
+        }
+
+        .sauap .ui-message-error-detail,
+        .sauap .ui-message-error-summary{
+            color:var(--danger);
+            font-weight:600;
+            font-size:12px;
+        }
+
+        .sauap .ui-messages{
+            border-radius:12px;
+            margin:12px 0 18px 0;
+            box-shadow:0 8px 20px rgba(0,0,0,.06);
+        }
+        .sauap .ui-messages-error{
+            border:1px solid #f3c7c7;
+            background:#fff5f5;
+        }
+        .sauap .ui-messages-error-icon{
+            color:var(--danger);
+        }
+
+        .sauap .ui-messages-info{
+            border:1px solid #b7e1c1;
+            background:#f0fff4;
+        }
+        .sauap .ui-messages-info-icon{
+            color:var(--success);
+        }
+        .sauap .ui-messages-info-summary,
+        .sauap .ui-messages-info-detail{
+            color:var(--success);
+            font-weight:700;
+        }
+
+        @media (max-width: 900px){
+            .sauap .grid{ grid-template-columns:1fr; }
+            .navbar-links { gap: 15px; }
+            .sauap .page { padding: 0 20px; }
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="sauap">
+
+        <div class="navbar">
+            <h:outputText value="SAUAP" class="navbar-brand" />
+
+            <div class="navbar-links">
+                <h:outputLink value="profesor.xhtml">Profesores</h:outputLink>
+                <h:outputLink value="crud_unidades.xhtml">Unidades</h:outputLink>
+                <h:outputLink value="#" class="active">Asignaciones</h:outputLink>
+                <h:outputLink value="reporte_carga.xhtml">Consultas</h:outputLink>
+            </div>
+
+            <h:form style="margin: 0; padding: 0;">
+                <p:commandLink action="#{loginBean.cerrarSesion}" styleClass="logout-btn">
+                    <p:confirm header="Cerrar sesión" message="¿Seguro que quieres cerrar sesión?" icon="pi pi-exclamation-triangle"/>
+                    <i class="pi pi-sign-out" style="font-size: 1.5rem"></i>
+                    <h:outputText value="Cerrar sesión" escape="false" />
+                </p:commandLink>
+
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                    <p:commandButton value="Cerrar sesión" type="button" styleClass="ui-confirmdialog-yes"
+                                     style="background-color: #006737; border-color: #006737; color: white;"/>
+                </p:confirmDialog>
+            </h:form>
+        </div>
+
+        <div class="page">
+            <div class="page-title">Asignación de Unidades de Aprendizaje</div>
+
+            <h:form id="frmAsignacion">
+
+                <p:messages id="msgs" closable="true" showDetail="true"/>
+
+                <div class="card">
+                    <div class="card-head">
+                        <div class="card-icon">🗓</div>
+                        <div>
+                            <h2>Configuración de Asignación</h2>
+                            <p>Selecciona profesor, unidad, día y horario. El sistema bloquea empalmes automáticamente.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid">
+
+                        <div>
+                            <div class="field">
+                                <div class="label">Profesor</div>
+                                <p:selectOneMenu id="cmbProfesor"
+                                                 value="#{asignacionBean.idProfesorSeleccionado}"
+                                                 required="true" requiredMessage="Error: Campo obligatorio.">
+                                    <f:selectItem itemLabel="-- Selecciona --" itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{asignacionBean.listaProfesores}"
+                                                   var="p"
+                                                   itemLabel="#{p.nombre} #{p.apellidoPaterno} #{p.apellidoMaterno}"
+                                                   itemValue="#{p.id}"/>
+                                </p:selectOneMenu>
+                                <p:message for="cmbProfesor"/>
+                            </div>
+
+                            <div class="field">
+                                <div class="label">Materia</div>
+                                <p:selectOneMenu id="cmbUnidad"
+                                                 value="#{asignacionBean.idUnidadSeleccionada}"
+                                                 required="true" requiredMessage="Error: Campo obligatorio.">
+                                    <f:selectItem itemLabel="-- Selecciona --" itemValue="#{null}" noSelectionOption="true"/>
+                                    <f:selectItems value="#{asignacionBean.listaUnidades}"
+                                                   var="u"
+                                                   itemLabel="#{u.nombre}"
+                                                   itemValue="#{u.id}"/>
+                                </p:selectOneMenu>
+                                <p:message for="cmbUnidad"/>
+                            </div>
+                        </div>
+
+                        <div class="rightBox">
+                            <div class="rightTitle">Día y Horario</div>
+
+                            <div class="field dayButtons">
+                                <div class="label">Día</div>
+                                <p:selectOneButton id="diaBtns"
+                                                   value="#{asignacionBean.diaSeleccionado}"
+                                                   required="true" requiredMessage="Error: Campo obligatorio.">
+                                    <f:selectItems value="#{asignacionBean.listaDias}" var="d"
+                                                   itemLabel="#{d}" itemValue="#{d}"/>
+                                </p:selectOneButton>
+                                <p:message for="diaBtns"/>
+                            </div>
+
+                            <div class="timeRow">
+                                <div class="field">
+                                    <div class="label">Inicio</div>
+                                    <p:datePicker id="horaInicio"
+                                                  value="#{asignacionBean.horaInicio}"
+                                                  timeOnly="true"
+                                                  pattern="HH:mm"
+                                                  required="true" requiredMessage="Error: Campo obligatorio."
+                                                  showIcon="true"/>
+                                    <p:message for="horaInicio"/>
+                                </div>
+
+                                <div class="field">
+                                    <div class="label">Fin</div>
+                                    <p:datePicker id="horaFin"
+                                                  value="#{asignacionBean.horaFin}"
+                                                  timeOnly="true"
+                                                  pattern="HH:mm"
+                                                  required="true" requiredMessage="Error: Campo obligatorio."
+                                                  showIcon="true"/>
+                                    <p:message for="horaFin"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <p:commandButton value="Cancelar"
+                                         icon="pi pi-times"
+                                         actionListener="#{asignacionBean.limpiar}"
+                                         update="frmAsignacion msgs"
+                                         process="@this"
+                                         styleClass="btn-secondary"/>
+
+                        <p:commandButton value="Guardar Asignación"
+                                         icon="pi pi-save"
+                                         action="#{asignacionBean.guardar}"
+                                         update="frmAsignacion msgs"
+                                         process="@form"
+                                         styleClass="btn-primary"/>
+                    </div>
+
+                </div>
+            </h:form>
+        </div>
+
+    </div>
+</h:body>
+</html>

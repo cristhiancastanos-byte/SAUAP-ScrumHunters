@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>SAUAP - Registro de Profesores</title>
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            background-color: #2b5e3d;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            height: 70px;
+            border-bottom: 4px solid #b39b59;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 50px;
+            text-decoration: none;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 30px;
+            flex-grow: 1;
+        }
+
+        .navbar-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .navbar-links a.active, .navbar-links a:hover {
+            text-decoration: underline;
+            text-underline-offset: 6px;
+        }
+
+        body .logout-btn {
+            color: white !important;
+            text-decoration: none !important;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        .form-title {
+            width: 750px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .form-card {
+            background: white;
+            padding: 40px;
+            border-radius: 4px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 750px;
+            box-sizing: border-box;
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .field-group { display: flex; flex-direction: column; gap: 5px; }
+        .field-label { font-weight: bold; font-size: 14px; color: #111827; }
+
+        .custom-input {
+            background-color: #fbfbfc !important;
+            border: 1px solid #e5e7eb !important;
+            border-radius: 4px !important;
+            padding: 10px !important;
+            width: 100%;
+            box-sizing: border-box;
+            color: #000 !important;
+        }
+
+        .ui-state-error { border: 1px solid #e53935 !important; }
+        .error-text { color: #e53935 !important; font-size: 12px !important; font-weight: bold; margin-top: 2px; }
+
+        .button-bar {
+            width: 750px;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+
+        .btn-sauap {
+            background-color: #2b5e3d !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 4px !important;
+            padding: 12px 0 !important;
+            width: 220px !important;
+            font-weight: bold !important;
+            font-size: 16px !important;
+            text-align: center !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+        }
+
+        .btn-sauap:hover {
+            background-color: #1f452c !important;
+        }
+
+        .success-panel {
+            margin-top: 30px;
+            background: white;
+            width: 750px;
+            height: 100px;
+            border: 2px solid #2b5e3d;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .error-panel {
+            margin-top: 30px;
+            background: #FFF0F0;
+            width: 750px;
+            height: 100px;
+            border: 2px solid #d32f2f;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <div class="navbar">
+        <h:outputText value="SAUAP" class="navbar-brand" />
+
+        <div class="navbar-links">
+            <h:outputLink value="#" class="active">Profesores</h:outputLink>
+            <h:outputLink value="crud_unidades.xhtml">Unidades</h:outputLink>
+            <h:outputLink value="asignacion.xhtml">Asignaciones</h:outputLink>
+            <h:outputLink value="reporte_carga.xhtml">Consultas</h:outputLink>
+        </div>
+
+        <h:form style="margin: 0; padding: 0;">
+            <p:commandLink action="#{loginBean.cerrarSesion}" styleClass="logout-btn">
+                <p:confirm header="Cerrar sesión" message="¿Seguro que quieres cerrar sesión?" icon="pi pi-exclamation-triangle"/>
+                <i class="pi pi-sign-out" style="font-size: 1.5rem"></i>
+                <h:outputText value="Cerrar sesión" escape="false" />
+            </p:commandLink>
+
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+                <p:commandButton value="Cerrar sesión" type="button" styleClass="ui-confirmdialog-yes"
+                                 style="background-color: #006737; border-color: #006737; color: white;"/>
+            </p:confirmDialog>
+        </h:form>
+    </div>
+
+
+    <div class="main-container">
+        <div class="form-title">Formulario del profesor</div>
+
+        <h:form id="profesorForm">
+            <div class="form-card">
+                <div class="input-grid">
+                    <div class="field-group">
+                        <p:outputLabel for="nombre" value="Nombre" styleClass="field-label" />
+                        <p:inputText id="nombre" value="#{profesorBean.profesor.nombre}"
+                                     styleClass="custom-input" required="true"
+                                     requiredMessage="Nombre obligatorio"
+                                     validatorMessage="Superaste los 50 Caracteres">
+                            <f:validateLength maximum="50" />
+                        </p:inputText>
+                        <p:message for="nombre" display="text" styleClass="error-text" />
+                    </div>
+
+                    <div class="field-group">
+                        <p:outputLabel for="paterno" value="Apellido Paterno" styleClass="field-label" />
+                        <p:inputText id="paterno" value="#{profesorBean.profesor.apellidoPaterno}"
+                                     styleClass="custom-input" required="true"
+                                     requiredMessage="Apellido obligatorio"
+                                     validatorMessage="Superaste los 50 Caracteres">
+                            <f:validateLength maximum="50" />
+                        </p:inputText>
+                        <p:message for="paterno" display="text" styleClass="error-text" />
+                    </div>
+
+                    <div class="field-group">
+                        <p:outputLabel for="materno" value="Apellido Materno" styleClass="field-label" />
+                        <p:inputText id="materno" value="#{profesorBean.profesor.apellidoMaterno}"
+                                     styleClass="custom-input" required="true"
+                                     requiredMessage="Apellido materno obligatorio"
+                                     validatorMessage="Superaste los 50 Caracteres">
+                            <f:validateLength maximum="50" />
+                        </p:inputText>
+                        <p:message for="materno" display="text" styleClass="error-text" />
+                    </div>
+                </div>
+
+                <div class="field-group" style="width: 60%;">
+                    <p:outputLabel for="rfc" value="RFC" styleClass="field-label" />
+                    <p:inputText id="rfc" value="#{profesorBean.profesor.rfc}"
+                                 styleClass="custom-input" required="true"
+                                 requiredMessage="RFC obligatorio"
+                                 validatorMessage="Formato de RFC inválido.">
+                        <f:validateRegex pattern="^[a-zA-ZÑñ&amp;]{4}[0-9]{6}[a-zA-Z0-9]{3}$" />
+                    </p:inputText>
+                    <p:message for="rfc" display="text" styleClass="error-text" />
+                </div>
+            </div>
+
+            <div class="button-bar">
+                <p:commandButton value="Guardar" actionListener="#{profesorBean.registrar}"
+                                 update="@form :message-panel" styleClass="btn-sauap" />
+            </div>
+        </h:form>
+
+        <h:panelGroup id="message-panel">
+            <h:panelGroup rendered="#{not empty profesorBean.mensaje and profesorBean.exito}" styleClass="success-panel">
+                <span style="font-size: 18px; font-weight: bold; color: #000;">#{profesorBean.mensaje}</span>
+                <i class="pi pi-check-circle" style="color: #2b5e3d; font-size: 2.5rem;"></i>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{not empty profesorBean.mensaje and not profesorBean.exito}" styleClass="error-panel">
+                <span style="font-size: 18px; font-weight: bold; color: #d32f2f;">#{profesorBean.mensaje}</span>
+            </h:panelGroup>
+        </h:panelGroup>
+    </div>
+</h:body>
+</html>
