@@ -4,11 +4,13 @@ import com.sauap.entidad.UnidadAprendizaje;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+
 import java.util.List;
 
 public class UnidadDAO {
-    // Asegúrate que el nombre "default" coincida con tu persistence.xml
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+
+    private static final EntityManagerFactory emf =
+            Persistence.createEntityManagerFactory("default");
 
     public void guardar(UnidadAprendizaje unidad) {
         EntityManager em = emf.createEntityManager();
@@ -27,7 +29,17 @@ public class UnidadDAO {
     public List<UnidadAprendizaje> obtenerTodas() {
         EntityManager em = emf.createEntityManager();
         try {
-            return em.createQuery("SELECT u FROM UnidadAprendizaje u", UnidadAprendizaje.class).getResultList();
+            String jpql = "SELECT u FROM UnidadAprendizaje u ORDER BY u.nombre";
+            return em.createQuery(jpql, UnidadAprendizaje.class).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public UnidadAprendizaje buscarPorId(int id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.find(UnidadAprendizaje.class, id);
         } finally {
             em.close();
         }

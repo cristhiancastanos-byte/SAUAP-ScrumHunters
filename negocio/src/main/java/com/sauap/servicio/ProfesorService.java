@@ -2,6 +2,8 @@ package com.sauap.servicio;
 
 import com.sauap.entidad.Profesor;
 import com.sauap.persistencia.ProfesorDAO;
+
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class ProfesorService {
@@ -16,18 +18,25 @@ public class ProfesorService {
 
         String rfcUpper = profesor.getRfc().toUpperCase().trim();
 
-        // 1. Validar el formato exacto del RFC
+
         if (!Pattern.matches(RFC_REGEX, rfcUpper)) {
             throw new Exception("Error: Formato de RFC inválido. Use 4 letras, 6 números y homoclave.");
         }
 
-        // 2. Validar que no exista un profesor con ese mismo RFC en la BD
+
         if (profesorDAO.existeRFC(rfcUpper)) {
             throw new Exception("Error: El RFC ingresado ya pertenece a un profesor registrado.");
         }
 
-        // Si pasa todas las pruebas, lo guardamos
         profesor.setRfc(rfcUpper);
         profesorDAO.guardar(profesor);
+    }
+
+    public List<Profesor> listarProfesores() {
+        return profesorDAO.obtenerTodos();
+    }
+
+    public Profesor buscarPorId(int id) {
+        return profesorDAO.buscarPorId(id);
     }
 }
